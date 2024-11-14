@@ -1,0 +1,19 @@
+<mat-card class="employee-card {{ employee.valid}}" @fadeIn>
+  <mat-card-header>
+    <!-- Avatar Circle with Initials -->
+    <div mat-card-avatar class="employee-avatar">
+      {{ employee.employee_name.charAt(0) }}
+    </div>
+    <mat-card-title>{{ employee.employee_name }}</mat-card-title>
+    <mat-card-subtitle> {{ employee.valid}} Employee</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p><strong>Salary:</strong> {{ employee.employee_salary | currency }}</p>
+    <p><strong>Age:</strong> {{ employee.employee_age }}</p>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-button mat-dialog-close>Close</button>
+  </mat-card-actions>
+</mat-card>

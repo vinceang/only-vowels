@@ -1,1 +1,208 @@
-/* You can add global styles to this file, and also import other style files */
+@import "breakpoint-sass/stylesheets/breakpoint";
+
+$small: 480px;
+$medium: 768px;
+$large: 1024px;
+$xlarge: 1200px;
+$spacing: 16px;
+$warn-color: #d65656;
+$good-color: #44adab;
+.mat-warn.mat-icon {
+  --mat-icon-color: #d65656;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  background-color: #dedede;
+  padding: 48px;
+  flex-direction: column;
+
+  @include breakpoint($medium) {
+    gap: 64px;
+    padding: 64px;
+  }
+}
+
+.logo-tagline {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  h1 {
+    font-style: italic;
+    span {
+      font-weight: 200;
+    }
+    font-weight: 900;
+  }
+  h1,
+  span {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+  span.tagline {
+    font-size: 14px;
+  }
+  footer & {
+    transform: scale(0.65);
+    color: rgb(85, 85, 85);
+  }
+}
+
+.employees-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding-bottom: 64px;
+  @include breakpoint($medium) {
+    padding: 32px 32px 96px 32px;
+    max-width: 1200px;
+  }
+}
+
+.mdc-button__label {
+  min-width: 72px;
+}
+
+.mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled) {
+  background-color: #59aacc82;
+}
+.warn {
+  color: $warn-color;
+}
+
+.mat-row:nth-child(even) {
+  background-color: #f5f5f5;
+}
+
+.mat-row:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+.mat-row:hover {
+  background-color: #e0e0e0;
+}
+
+.clickable-row {
+  cursor: pointer;
+}
+
+.search-utils {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  padding: 32px;
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+
+  @include breakpoint($medium) {
+    padding: 32px 0px 24px 0px;
+  }
+}
+
+.search-valid {
+  display: flex;
+  gap: $spacing;
+  flex-direction: column;
+}
+.search-field {
+  display: flex;
+  gap: $spacing;
+  .mdc-button {
+    margin-top: 8px;
+  }
+  .mat-mdc-raised-button {
+    border-radius: 8px;
+  }
+}
+
+.cdk-column-valid {
+  width: 72px;
+  text-align: center;
+  .mat-icon {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.employee-avatar {
+  background-color: $good-color;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.mat-mdc-card.employee-card {
+  padding: 32px;
+  gap: 24px;
+  background: none;
+  box-shadow: none;
+  .mat-mdc-card-subtitle {
+    &::before {
+      content: "\2713";
+    }
+    padding-top: 8px;
+    font-weight: 300;
+    font-size: 12px;
+    color: $good-color;
+  }
+  .mat-mdc-card-actions {
+    justify-content: center;
+  }
+}
+
+.Invalid {
+  .employee-avatar {
+    background-color: $warn-color;
+  }
+  &.mat-mdc-card.employee-card .mat-mdc-card-subtitle {
+    &::before {
+      content: "\00D7";
+    }
+    color: $warn-color;
+  }
+}
+
+footer {
+  background-color: black;
+  color: #666;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 64px 0 24px 0;
+  font-size: 12px;
+  a {
+    color: #6d8b96;
+    text-decoration: none;
+  }
+
+  span.copyright {
+    font-size: 10px;
+  }
+}

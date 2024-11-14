@@ -1,0 +1,96 @@
+<div class="hero">
+  <app-logo-tagline></app-logo-tagline>
+  <!-- ID Check Input Field -->
+  <div class="search-valid">
+    <div class="search-field">
+      <mat-form-field appearance="outline" class="mb-3">
+        <mat-label>Search By Employee ID</mat-label>
+        <input matInput #employeeIdInput type="number" placeholder="Enter Employee ID" (focus)="clearResultMessage()" />
+        @if(invalidResultMessage()) {
+        <mat-hint class="warn"><span class="warn">{{ invalidResultMessage() }}</span></mat-hint>
+        }
+      </mat-form-field>
+      <button mat-raised-button color="primary" [disabled]="!employeeIdInput.value || +employeeIdInput.value <= 0"
+        (click)="checkEmployeeById(employeeIdInput.valueAsNumber)">
+        Check ID
+      </button>
+    </div>
+
+    <!-- Display valid employee as a clickable mat-chip if it exists -->
+    @if(validEmployee()) {
+    <div class="search-results">
+      <mat-chip color="primary" clickable (click)="openEmployeeDetail(validEmployee()!)">
+        {{ validEmployee()?.employee_name }}
+        <button matChipRemove (click)="clearResultMessage()">
+          <mat-icon fontSet='material-icons-outlined'>cancel</mat-icon>
+        </button>
+      </mat-chip>
+    </div>
+    }
+  </div>
+</div>
+
+<section class="employees-container">
+  <div class="search-utils">
+    <!-- Search Input Field -->
+    <mat-form-field appearance="outline" class="mb-3">
+      <mat-label>Search employees</mat-label>
+      <input matInput (input)="applyFilter($event)" placeholder="By name, salary, or age" />
+    </mat-form-field>
+    <!-- Toggle Button for Valid Column -->
+    <mat-slide-toggle class="my-slide" [(ngModel)]="showValidColumn" (change)="toggleValidColumn()"
+      labelPosition="before">
+      Show Validity Column
+    </mat-slide-toggle>
+
+  </div>
+
+  <!-- Employee Table with Clickable Rows -->
+  <table mat-table [dataSource]="dataSource" matSort class="employees-table mat-elevation-z8">
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let employee">{{ employee.id }}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="employee_name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td mat-cell *matCellDef="let employee">{{ employee.employee_name }}</td>
+    </ng-container>
+
+    <!-- Validity Column with Icons -->
+    <ng-container matColumnDef="valid">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Validity</th>
+      <td mat-cell *matCellDef="let employee">
+        @if(employee.valid === 'Valid'){
+        <mat-icon color="primary" fontSet='material-icons-outlined'>check_circle</mat-icon>
+        }@else {
+        <mat-icon color="warn" fontSet='material-icons-outlined'>cancel</mat-icon>
+        }
+
+
+      </td>
+    </ng-container>
+
+    <!-- Salary Column -->
+    <ng-container matColumnDef="employee_salary">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Salary</th>
+      <td mat-cell *matCellDef="let employee">{{ employee.employee_salary |
+        currency }}</td>
+    </ng-container>
+
+    <!-- Age Column -->
+    <ng-container matColumnDef="employee_age">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Age</th>
+      <td mat-cell *matCellDef="let employee">{{ employee.employee_age }}</td>
+    </ng-container>
+
+    <!-- Header and Row Definitions -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="mat-row clickable-row"
+      (click)="openEmployeeDetail(row)"></tr>
+
+  </table>
+</section>
